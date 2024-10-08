@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import './App.css';
- import About from './components/About';
+import About from './components/About';
 import Navbar from './components/Navbar';
  import TextForm from './components/TextForm';
 import Alert from './components/Alert';
@@ -34,8 +34,17 @@ function App() {
 
 
   }
+   const removeBodyClasses = ()=>{
+    document.body.classList.remove('bg-light');
+    document.body.classList.remove('bg-dark');
+    document.body.classList.remove('bg-danger');
+    document.body.classList.remove('bg-success');
+    document.body.classList.remove('bg-warning');
+   }
 
-  const toggleMode = ()=> {
+  const toggleMode = (cls)=> {
+    removeBodyClasses();
+    document.body.classList.add('bg-'+cls)
    if(mode === 'light'){
     setMode('dark');
     document.body.style.backgroundColor = '#324689';
@@ -48,20 +57,21 @@ function App() {
   }
   return (
    <>
-   <Router>
+   <Router> 
     
    <Navbar title="Textutils" mode={mode} toggleMode={toggleMode} aboutText="About Us"/>
   <Alert alert={alert}/> 
    <div className="container my-3"> 
-  <Routes>
-          <Route path="/about" exact element={<About />} />
+ <Routes> 
+          <Route path="/about" exact element={<About mode={mode} />} /> 
         
-          <Route path="/" exact element={<TextForm showAlert={showAlert} heading="Enter the text to analyse below" mode={mode}/> } />
+         <Route path="/" exact element={<TextForm showAlert={showAlert} heading="Try Textutils - Word Counter, Character Counter" mode={mode}/> } /> 
+      
           
-   </Routes>   
+    </Routes>    
  </div> 
 
-  </Router>
+   </Router> 
    </>
   );
 }
